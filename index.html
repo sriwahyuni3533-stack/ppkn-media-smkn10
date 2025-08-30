@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Media Ajar Interaktif — Pendidikan Pancasila</title>
+<style>
+  :root{
+    --bg-a: #e0f2ff;    /* very light blue */
+    --bg-b: #fff0f6;    /* very light pink */
+    --primary:#2563eb;  /* blue */
+    --accent:#ec4899;   /* pink */
+    --panel:#ffffff;
+    --ink:#000000;      /* teks hitam */
+    --muted:#475569;
+    --card-shadow: 0 12px 30px rgba(37,99,235,0.08);
+    --round:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+    /* diagonal soft gradient combining blue & pink */
+    background: linear-gradient(135deg, var(--bg-a) 0%, #f0f9ff 25%, #fff5fb 60%, var(--bg-b) 100%);
+  }
+  .wrap{max-width:1100px;margin:28px auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .brand{display:flex;gap:14px;align-items:center}
+  .logo{
+    width:88px;height:88px;border-radius:18px;
+    background: linear-gradient(135deg,var(--primary),var(--accent));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;
+    box-shadow: var(--card-shadow);
+  }
+  h1{font-size:20px;margin:0}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px}
+  nav{display:flex;gap:8px;align-items:center}
+  .btn{background:var(--primary);color:#fff;padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;color:var(--primary);border:1px solid rgba(37,99,235,0.12)}
+  .grid{display:grid;gap:14px}
+  .cols-2{grid-template-columns: 1fr 420px;}
+  .panel{background:var(--panel);border-radius:var(--round);padding:14px;border:1px solid rgba(0,0,0,0.06);box-shadow:var(--card-shadow)}
+  h2{margin:0 0 10px 0}
+  .muted{color:var(--muted);font-size:13px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input,select,textarea,button{font:inherit}
+  input,select,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #e6eef8;background:#fff}
+  textarea{min-height:100px;resize:vertical}
+  .section{margin-bottom:12px}
+  .sila{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.04);background:linear-gradient(180deg,#fff,#fcfcff)}
+  .sila h3{margin:0 0 6px 0}
+  .sila p{margin:0;color:#1f2937}
+  .quiz q{display:block;margin-bottom:8px}
+  .note-list{max-height:220px;overflow:auto;padding:8px;border-radius:10px;border:1px dashed rgba(0,0,0,0.06);background:#fff}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
+  .small{font-size:12px;color:var(--muted)}
+  footer{margin-top:18px;color:var(--muted);font-size:13px}
+  @media (max-width:980px){ .cols-2{grid-template-columns:1fr} header{flex-direction:column;align-items:flex-start;gap:12px} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">PANCASILA</div>
+        <div>
+          <h1>Media Ajar Interaktif — Pendidikan Pancasila</h1>
+          <div class="sub">Aplikasi untuk memahami & menerapkan nilai-nilai Pancasila (SMK) — UPT SMKN 10 Jeneponto</div>
+        </div>
+      </div>
+      <nav>
+        <button class="btn" id="btnExport">Ekspor Data</button>
+        <button class="btn ghost" id="btnImport">Impor</button>
+        <input type="file" id="fileImport" accept="application/json" style="display:none"/>
+      </nav>
+    </header>
+
+    <main class="grid cols-2">
+      <!-- left: materi & aktivitas -->
+      <section>
+        <article class="panel section" id="intro">
+          <h2>Pembukaan</h2>
+          <p class="muted">Selamat datang! Media ini dirancang untuk membantu siswa memahami nilai-nilai Pancasila dan menerapkannya dalam aktivitas sekolah, keluarga, dan masyarakat.</p>
+          <div style="margin-top:10px">
+            <strong>Tujuan Pembelajaran</strong>
+            <ul class="small">
+              <li>Siswa mampu menjelaskan nilai setiap sila Pancasila.</li>
+              <li>Siswa mampu memberi contoh penerapan nyata di lingkungan SMK.</li>
+              <li>Siswa mampu melakukan refleksi dan mengumpulkan bukti penerapan nilai.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="panel section" id="materi">
+          <h2>Materi Inti — Nilai-nilai Pancasila</h2>
+
+          <div class="sila" id="sila1">
+            <div style="width:8px;height:48px;background:linear-gradient(180deg,var(--primary),var(--accent));border-radius:6px"></div>
+            <div>
+              <h3>Sila I — Ketuhanan Yang Maha Esa</h3>
+              <p>Pengertian: Mengakui adanya Tuhan dan menghormati kebebasan beragama. Dalam konteks sekolah SMK: siswa menunjukkan penghormatan terhadap kebebasan beragama dan berperilaku religius sesuai ajaran masing-masing.</p>
+              <div class="small" style="margin-top:6px"><strong>Contoh penerapan:</strong> Mengadakan doa bersama (non-paksaan), ruang ibadah yang ramah bagi semua agama, saling menghormati jadwal ibadah teman.</div>
+            </div>
+          </div>
+
+          <div class="sila" id="sila2" style="margin-top:10px">
+            <div style="width:8px;height:48px;background:linear-gradient(180deg,var(--accent),var(--primary));border-radius:6px"></div>
+            <div>
+              <h3>Sila II — Kemanusiaan yang Adil dan Beradab</h3>
+              <p>Pengertian: Menghargai harkat dan martabat manusia, menunjukkan sikap empati dan tolong-menolong.</p>
+              <div class="small" style="margin-top:6px"><strong>Contoh penerapan:</strong> Menengok teman sakit, membantu saat ada siswa yang kesusahan, menolak bullying dan diskriminasi.</div>
+            </div>
+          </div>
+
+          <div class="sila" id="sila3" style="margin-top:10px">
+            <div style="width:8px;height:48px;background:linear-gradient(180deg,#8b5cf6,#06b6d4);border-radius:6px"></div>
+            <div>
+              <h3>Sila III — Persatuan Indonesia</h3>
+              <p>Pengertian: Menjaga persatuan & tenggang rasa antarwarga negara, mengutamakan semangat kebangsaan.</p>
+              <div class="small" style="margin-top:6px"><strong>Contoh penerapan:</strong> Gotong royong membersihkan lingkungan sekolah; kegiatan ekstrakurikuler lintas jurusan; merayakan momen kebangsaan bersama.</div>
+            </div>
+          </div>
+
+          <div class="sila" id="sila4" style="margin-top:10px">
+            <div style="width:8px;height:48px;background:linear-gradient(180deg,#06b6d4,#ec4899);border-radius:6px"></div>
+            <div>
+              <h3>Sila IV — Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan</h3>
+              <p>Pengertian: Menjunjung prinsip musyawarah untuk mufakat dan demokrasi yang bijak.</p>
+              <div class="small" style="margin-top:6px"><strong>Contoh penerapan:</strong> Rapat OSIS, musyawarah jurusan untuk menyelesaikan masalah bersama, meminta pendapat seluruh anggota kelas sebelum mengambil keputusan.</div>
+            </div>
+          </div>
+
+          <div class="sila" id="sila5" style="margin-top:10px">
+            <div style="width:8px;height:48px;background:linear-gradient(180deg,#ff7ab6,#2563eb);border-radius:6px"></div>
+            <div>
+              <h3>Sila V — Keadilan Sosial bagi Seluruh Rakyat Indonesia</h3>
+              <p>Pengertian: Menjamin kesejahteraan, memperlakukan semua orang secara adil, dan mengurangi kesenjangan.</p>
+              <div class="small" style="margin-top:6px"><strong>Contoh penerapan:</strong> Pembagian tugas yang adil, kegiatan bakti sosial, memastikan kesempatan belajar setara bagi semua siswa.</div>
+            </div>
+          </div>
+
+        </article>
+
+        <article class="panel section" id="aktivitas">
+          <h2>Aktivitas Interaktif</h2>
+          <div style="margin-bottom:10px">
+            <strong>Kuis Singkat (Pilihan Ganda)</strong>
+            <div class="quiz" id="quizArea" style="margin-top:8px">
+              <!-- quiz injected by JS -->
+            </div>
+            <div style="margin-top:8px"><button class="btn" id="btnCheckQuiz">Periksa Jawaban</button></div>
+            <div id="quizResult" class="small" style="margin-top:8px"></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <strong>Refleksi Pribadi & Pengumpulan Tugas</strong>
+            <div class="small">Tulis pengalaman Anda menerapkan salah satu sila Pancasila di sekolah atau masyarakat. Unggah bukti (foto/pdf) jika ada.</div>
+            <div style="margin-top:8px">
+              <label>Jenis tugas</label>
+              <select id="taskSelectSimple">
+                <option value="refleksi">Refleksi tertulis (esai)</option>
+                <option value="laporan">Laporan & bukti (foto/pdf)</option>
+              </select>
+            </div>
+            <div style="margin-top:8px">
+              <label>Judul Pengumpulan</label>
+              <input id="taskTitle" placeholder="Mis: Refleksi — Penerapan Sila II" />
+            </div>
+            <div style="margin-top:8px">
+              <label>Isi / Refleksi</label>
+              <textarea id="taskText" placeholder="Ceritakan pengalamanmu..."></textarea>
+            </div>
+            <div style="margin-top:8px">
+              <label>Unggah bukti (opsional)</label>
+              <input type="file" id="taskFile" accept="image/*,application/pdf" />
+            </div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn" id="btnSubmitTask">Kumpulkan Tugas</button>
+              <button class="btn ghost" id="btnSaveDraftTask">Simpan Draft</button>
+            </div>
+            <div id="taskMessage" class="small" style="margin-top:8px"></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- right: panel guru, presensi, rekap -->
+      <aside>
+        <div class="panel section">
+          <h2>Panel Guru — Penilaian & Rubrik</h2>
+          <div class="small">Buat rubrik singkat (total bobot 100%)</div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <input id="rubName" placeholder="Kriteria (mis. Konten)" />
+            <input id="rubWeight" type="number" placeholder="Bobot %" style="width:110px" />
+            <button class="btn ghost" id="btnAddRub">Tambah</button>
+          </div>
+          <div id="rubList" style="margin-top:10px"></div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" id="btnSaveRubrik">Simpan Rubrik</button>
+            <button class="btn ghost" id="btnClearRub">Reset</button>
+          </div>
+          <div class="small" style="margin-top:8px">Rubrik sekarang akan dipakai saat penilaian tugas siswa.</div>
+        </div>
+
+        <div class="panel section" style="margin-top:12px">
+          <h3>Presensi Sederhana</h3>
+          <div class="small">Masukkan daftar siswa singkat untuk sesi hari ini (contoh).</div>
+          <div style="margin-top:8px">
+            <label>Tanggal</label><input id="presDate" type="date" />
+          </div>
+          <div style="margin-top:8px">
+            <label>Daftar siswa (format: NIS - Nama , satu baris per siswa)</label>
+            <textarea id="roster" placeholder="101 - Siswa A\n102 - Siswa B"></textarea>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="btn" id="btnLoadRoster">Muat</button>
+            <button class="btn ghost" id="btnSavePres">Simpan Presensi</button>
+          </div>
+          <div id="presArea" style="margin-top:8px"></div>
+        </div>
+
+        <div class="panel section" style="margin-top:12px">
+          <h3>Rekap & Penilaian</h3>
+          <div class="small">Daftar pengumpulan tugas & nilai (guru bisa memberi nilai).</div>
+          <div style="margin-top:8px" id="submissionsList"></div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" id="btnExportAll">Ekspor Semua</button>
+            <button class="btn ghost" id="btnClearAll">Hapus Semua Data</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="small">Catatan: aplikasi ini berjalan di browser (localStorage). Ekspor data untuk backup. Didesain untuk pembelajaran mendalam (deep learning) — fokus pada ilmu, sikap, dan keterampilan.</div>
+    </footer>
+  </div>
+
+<script>
+/* Simple client app:
+   - QUIZ: built-in questions
+   - SUBMISSIONS: saved to localStorage as 'ppkn_submissions'
+   - RUBRIK: temporary editor saved as 'ppkn_rubrik'
+   - PRESENSI: saved as 'ppkn_presensi'
+*/
+
+// keys
+const KEY_SUB = 'ppkn_submissions_v2';
+const KEY_RUB = 'ppkn_rubrik_v2';
+const KEY_PRES = 'ppkn_presensi_v2';
+const KEY_DRAFT = 'ppkn_draft_v2';
+
+// util
+const $ = s => document.querySelector(s);
+const uid = (p='id') => p + '_' + Math.random().toString(36).slice(2,9);
+function save(key, obj){ localStorage.setItem(key, JSON.stringify(obj)); }
+function load(key, def){ try{ return JSON.parse(localStorage.getItem(key)||'null') || def; }catch(e){ return def; } }
+function showMsg(el, txt, time=3000){ el.textContent = txt; setTimeout(()=>{ if(el.textContent===txt) el.textContent=''; }, time); }
+
+// ------------- QUIZ -------------
+const QUIZ = [
+  {q:"Contoh penerapan sila II di sekolah adalah …", a:[ "Menghormati teman yang berbeda agama", "Mengutamakan kemenangan pribadi", "Mengabaikan teman sakit", "Melakukan bullying" ], key:0},
+  {q:"Sila III menekankan pentingnya …", a:[ "Persatuan & gotong royong", "Hanya kepentingan pribadi", "Diskriminasi", "Pertentangan antar kelompok" ], key:0},
+  {q:"Musyawarah untuk mufakat adalah implementasi dari sila …", a:[ "Sila I", "Sila II", "Sila IV", "Sila V" ], key:2},
+  {q:"Keadilan sosial dapat diwujudkan dengan …", a:[ "Pembagian tugas yang adil", "Memberi tugas pada teman selalu", "Mengambil hak teman", "Mengabaikan peraturan" ], key:0}
+];
+
+function renderQuiz(){
+  const area = $('#quizArea'); area.innerHTML = '';
+  QUIZ.forEach((q, idx)=>{
+    const div = document.createElement('div'); div.style.marginBottom='12px';
+    div.innerHTML = `<div><strong>Soal ${idx+1}.</strong> ${q.q}</div>`;
+    q.a.forEach((opt, j)=>{
+      const id = `q_${idx}_${j}`;
+      div.innerHTML += `<div style="margin-left:6px"><label><input type="radio" name="q${idx}" value="${j}"> ${opt}</label></div>`;
+    });
+    area.appendChild(div);
+  });
+}
+$('#btnCheckQuiz').addEventListener('click', ()=>{
+  let score = 0;
+  QUIZ.forEach((q, idx)=>{
+    const ans = document.querySelector(`input[name="q${idx}"]:checked`);
+    if(ans && Number(ans.value) === q.key) score++;
+  });
+  $('#quizResult').textContent = `Skor: ${score} / ${QUIZ.length} (${Math.round(score/QUIZ.length*100)}%)`;
+});
+renderQuiz();
+
+// ------------- Submissions (students) -------------
+let SUBS = load(KEY_SUB, []);
+function renderSubmissionsList(){
+  const out = $('#submissionsList'); out.innerHTML = '';
+  if(SUBS.length===0){ out.innerHTML = '<div class="small">Belum ada pengumpulan.</div>'; return; }
+  SUBS.forEach(s=>{
+    const div = document.createElement('div'); div.style.border='1px solid rgba(0,0,0,0.06)'; div.style.padding='8px'; div.style.borderRadius='8px'; div.style.marginBottom='8px';
+    div.innerHTML = `<div><strong>${s.title}</strong> <span class="small">oleh ${s.nama} (${s.nis}) • ${new Date(s.at).toLocaleString()}</span></div>
+      <div style="margin-top:6px">${s.text ? s.text.replace(/\n/g,'<br>') : '<span class="small">Tidak ada teks</span>'}</div>
+      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+        <button class="btn" data-id="${s.id}" data-act="grade">Nilai</button>
+        <button class="btn ghost" data-id="${s.id}" data-act="download">Unduh Bukti</button>
+        <div class="small" style="margin-left:auto">Level: <strong>${s.level||'Belum dinilai'}</strong></div>
+      </div>`;
+    out.appendChild(div);
+  });
+}
+renderSubmissionsList();
+
+// submit task
+$('#btnSubmitTask').addEventListener('click', async ()=>{
+  const title = $('#taskTitle').value.trim() || 'Refleksi Pancasila';
+  const text = $('#taskText').value.trim();
+  const file = $('#taskFile').files[0];
+  let fileObj = null;
+  if(file){
+    if(file.size > 10*1024*1024 && !confirm('File besar (>10MB). Lanjutkan?')) return;
+    fileObj = {name:file.name, type:file.type, size:file.size, data: await readAsDataURL(file)};
+  }
+  const sub = { id: uid('s'), title, text, file: fileObj, at: new Date().toISOString(), nis: prompt('Masukkan NIS (mis: 101)'), nama: prompt('Masukkan Nama lengkap') };
+  if(!sub.nis || !sub.nama) return alert('NIS & Nama wajib.');
+  // initial level blank until guru menilai
+  SUBS.unshift(sub); save(KEY_SUB, SUBS); renderSubmissionsList(); showMsg($('#taskMessage'),'Tugas berhasil dikumpulkan.');
+  // clear form
+  $('#taskTitle').value=''; $('#taskText').value=''; $('#taskFile').value='';
+});
+
+// save draft
+$('#btnSaveDraftTask').addEventListener('click', ()=>{
+  const draft = {title:$('#taskTitle').value, text:$('#taskText').value, at: new Date().toISOString()};
+  save(KEY_DRAFT, draft); showMsg($('#taskMessage'),'Draft tersimpan.');
+});
+
+// download dataURL file
+function downloadDataURL(dataURL, filename){
+  const a = document.createElement('a'); a.href = dataURL; a.download = filename; a.click();
+}
+
+// read file helper
+function readAsDataURL(file){ return new Promise((res,rej)=>{ const fr = new FileReader(); fr.onload = ()=> res(fr.result); fr.onerror = rej; fr.readAsDataURL(file); }); }
+
+// ------------- Rubrik -------------
+let RUBRIK = load(KEY_RUB, []);
+function renderRubrik(){
+  const out = $('#rubList'); out.innerHTML = '';
+  if(RUBRIK.length===0) out.innerHTML = '<div class="small">Belum ada rubrik.</div>';
+  RUBRIK.forEach((r, i)=>{
+    const d = document.createElement('div'); d.style.display='flex'; d.style.alignItems='center'; d.style.gap='8px'; d.style.marginBottom='8px';
+    d.innerHTML = `<div style="flex:1"><strong>${r.name}</strong><div class="small">Bobot: ${r.weight}%</div></div><button class="btn ghost" data-i="${i}">Hapus</button>`;
+    out.appendChild(d);
+    d.querySelector('button').addEventListener('click', ()=>{ RUBRIK.splice(i,1); save(KEY_RUB,RUBRIK); renderRubrik(); });
+  });
+}
+$('#btnAddRub').addEventListener('click', ()=>{
+  const name = $('#rubName').value.trim(); const w = Number($('#rubWeight').value||0);
+  if(!name || !w) return alert('Isi kriteria & bobot.');
+  RUBRIK.push({id:uid('r'), name, weight: w});
+  save(KEY_RUB, RUBRIK); renderRubrik(); $('#rubName').value=''; $('#rubWeight').value='';
+});
+$('#btnSaveRubrik').addEventListener('click', ()=>{ const sum = RUBRIK.reduce((s,x)=>s+x.weight,0); if(sum !== 100) return alert('Total bobot harus 100% (sekarang '+sum+'%).'); save(KEY_RUB,RUBRIK); alert('Rubrik disimpan.'); });
+$('#btnClearRub').addEventListener('click', ()=>{ if(confirm('Hapus semua rubrik?')){ RUBRIK=[]; save(KEY_RUB,RUBRIK); renderRubrik(); }});
+renderRubrik();
+
+// ------------- Presensi -------------
+let PRESENSI = load(KEY_PRES, []);
+$('#btnLoadRoster').addEventListener('click', ()=>{
+  const txt = $('#roster').value.trim();
+  if(!txt) return alert('Masukkan daftar siswa dahulu.');
+  const lines = txt.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  const table = document.createElement('div');
+  table.innerHTML = lines.map((L, idx)=>{
+    const [nis, nama] = L.split('-').map(t=>t? t.trim() : '');
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.04);margin-bottom:6px">
+      <div style="width:80px">${nis||('S'+(idx+1))}</div><div style="flex:1">${nama||('Siswa '+(idx+1))}</div>
+      <select data-nis="${nis||('S'+(idx+1))}" data-nama="${nama||('Siswa '+(idx+1))}">
+        <option value="H">Hadir</option><option value="I">Izin</option><option value="S">Sakit</option><option value="A">Alfa</option>
+      </select></div>`;
+  }).join('');
+  $('#presArea').innerHTML = table;
+});
+$('#btnSavePres').addEventListener('click', ()=>{
+  const date = $('#presDate').value || new Date().toISOString().split('T')[0];
+  const selects = Array.from($('#presArea').querySelectorAll('select'));
+  if(selects.length===0) return alert('Muat daftar siswa terlebih dahulu.');
+  const records = selects.map(s=>({nis:s.dataset.nis, nama:s.dataset.nama, status:s.value}));
+  PRESENSI.unshift({id:uid('p'), date, records});
+  save(KEY_PRES, PRESENSI);
+  alert('Presensi tersimpan untuk ' + date);
+});
+
+// ------------- grading (simple) -------------
+document.addEventListener('click', (e)=>{
+  if(e.target.dataset && e.target.dataset.act === 'download'){
+    const id = e.target.dataset.id; const sub = SUBS.find(s=>s.id===id);
+    if(sub && sub.file && sub.file.data) downloadDataURL(sub.file.data, sub.file.name);
+    else alert('Tidak ada bukti unggahan.');
+  }
+  if(e.target.dataset && e.target.dataset.act === 'grade'){
+    const id = e.target.dataset.id; openGrader(id);
+  }
+});
+
+function openGrader(subId){
+  const sub = SUBS.find(s=>s.id===subId); if(!sub) return;
+  // build prompt
+  let detail = `Penilaian untuk ${sub.nama} (${sub.nis})\nTugas: ${sub.title}\n\n`;
+  detail += `Rubrik tersedia:\n`;
+  RUBRIK.forEach((r, i)=> detail += `${i+1}. ${r.name} — bobot ${r.weight}%\n`);
+  const scores = {};
+  RUBRIK.forEach(r=>{
+    const v = Number(prompt(`Masukkan skor untuk kriteria "${r.name}" (0..${r.weight})`, '0')) || 0;
+    scores[r.id]=v;
+  });
+  const sum = Object.values(scores).reduce((s,v)=>s+v,0);
+  if(sum > 100) return alert('Total skor melebihi 100 (nilai bobot bersifat presentase).');
+  const totalPoints = Math.round((sum/100) * 100); // scale to 100
+  // attendance influence
+  const attPct = calcAttendanceFor(sub.nis);
+  const level = determineLevel(totalPoints, attPct);
+  sub.grade = {scores, total: totalPoints, attPct, level, by: 'Guru', at: new Date().toISOString()};
+  save(KEY_SUB, SUBS);
+  renderSubmissionsList();
+  alert(`Nilai tersimpan. Total ${totalPoints}. Attendance ${attPct}%. Level: ${level}`);
+}
+
+// attendance calc
+function calcAttendanceFor(nis){
+  if(!PRESENSI.length) return 0;
+  let total=0, hadir=0;
+  PRESENSI.forEach(p=>{
+    const r = p.records.find(rr=>rr.nis===nis);
+    if(r){ total++; if(r.status==='H') hadir++; }
+  });
+  return total ? Math.round((hadir/total)*100) : 0;
+}
+function determineLevel(score, att){
+  if(score>=85 && att>=90) return 'Teladan';
+  if(score>=70 && att>=75) return 'Utama';
+  if(score>=50) return 'Madya';
+  return 'Pemula';
+}
+
+// ------------- export/import -------------
+$('#btnExport').addEventListener('click', ()=> exportAll());
+$('#btnExportAll').addEventListener('click', ()=> exportAll());
+function exportAll(){
+  const payload = {subs:SUBS, rub:RUBRIK, pres:PRESENSI, exportedAt:new Date().toISOString()};
+  const data = JSON.stringify(payload, null, 2);
+  const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'media_ppkn_export_'+Date.now()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+$('#btnImport').addEventListener('click', ()=> $('#fileImport').click());
+$('#fileImport').addEventListener('change', (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const fr = new FileReader(); fr.onload = ()=> {
+    try{
+      const d = JSON.parse(fr.result);
+      if(Array.isArray(d.subs)) SUBS = d.subs.concat(SUBS);
+      if(Array.isArray(d.rub)) RUBRIK = d.rub.concat(RUBRIK);
+      if(Array.isArray(d.pres)) PRESENSI = d.pres.concat(PRESENSI);
+      save(KEY_SUB,SUBS); save(KEY_RUB,RUBRIK); save(KEY_PRES,PRESENSI);
+      renderSubmissionsList(); renderRubrik();
+      alert('Impor selesai.');
+    }catch(err){ alert('File impor tidak valid.'); }
+  }; fr.readAsText(f);
+});
+
+// clear all
+$('#btnClearAll').addEventListener('click', ()=> {
+  if(confirm('Hapus semua data (pengumpulan, rubrik, presensi)?')) {
+    SUBS=[]; RUBRIK=[]; PRESENSI=[];
+    save(KEY_SUB,SUBS); save(KEY_RUB,RUBRIK); save(KEY_PRES,PRESENSI);
+    renderSubmissionsList(); renderRubrik();
+    alert('Semua data terhapus.');
+  }
+});
+
+// load initial
+(function init(){
+  SUBS = load(KEY_SUB, []);
+  RUBRIK = load(KEY_RUB, []);
+  PRESENSI = load(KEY_PRES, []);
+  renderSubmissionsList();
+  renderRubrik();
+  // set default date
+  if(!$('#presDate').value) $('#presDate').value = new Date().toISOString().slice(0,10);
+  // load draft if any
+  const draft = load(KEY_DRAFT, null);
+  if(draft){ $('#taskTitle').value = draft.title || ''; $('#taskText').value = draft.text || ''; }
+})();
+</script>
+</body>
+</html>
